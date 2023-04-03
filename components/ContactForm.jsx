@@ -20,9 +20,9 @@ export default function ContactForm() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log("fullname", fullname)
-    console.log("email", email)
-    console.log("message", message)
+    // console.log("fullname", fullname)
+    // console.log("email", email)
+    // console.log("message", message)
   }
 
   return (
