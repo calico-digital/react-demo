@@ -3,6 +3,7 @@ import Head from "next/head"
 import pokemons from "@/assets/sampledataset.json"
 import PokemonList from "@/components/PokemonList"
 import Title from "@/components/Title"
+import Header from "@/components/Header"
 
 export default function Pokemons({pokemonsList}) {
   return (
@@ -11,6 +12,7 @@ export default function Pokemons({pokemonsList}) {
         <title>Pokemons</title>
       </Head>
 
+      <Header></Header>
       <Title>
         <span>List of pokemons</span>
       </Title>
