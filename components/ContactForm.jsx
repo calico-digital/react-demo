@@ -1,35 +1,41 @@
-import { useState } from "react"
-// {
-//     label: "",
-//     type: "text",
-// }
-
-function FormGroup({ label, type, placeholder, value, onInput }) {
-  return (
-    <div className="flex flex-col space-y-2">
-      <label>{label}</label>
-      <input onInput={onInput} type={type} placeholder={placeholder} value={value} className="border border-gray-600 text-gray-800 rounded p-2 outline-none" />
-    </div>
-  )
-}
+import { useEffect, useState } from "react"
+import FormGroup from "./FormGroup"
 
 export default function ContactForm() {
   const [fullname, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
+  const [submitted, setSubmitted] = useState(false)
+  const [errors, setErrors] = useState(null)
+
+  useEffect(() => {
+    setFullName('testing')
+  }, [])
+
+  useEffect(() => {
+    console.log('name changed')
+  }, [fullname])
 
   function handleSubmit(e) {
     e.preventDefault()
-    // console.log("fullname", fullname)
-    // console.log("email", email)
-    // console.log("message", message)
+    
+    setSubmitted(false)
+    setErrors(null)
+
+    let isValid = true
+    if (fullname === '' || email === '') {
+      isValid = false
+    }
+
+    if (isValid) {
+      setSubmitted(true)
+    } else {
+      setErrors('You have errors')
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="w-3/4 mx-auto flex flex-col space-y-3">
-      {/* <input type="text" onInput={(e)=>setFullName(e.target.value)} 
-       value={fullname} />
-       {fullname}  */}
       <FormGroup onInput={(e) => setFullName(e.target.value)} label="Full Name" type="text" placeholder="Your name" value={fullname} />
 
       <FormGroup onInput={(e) => setEmail(e.target.value)} value={email} label="Email" type="email" placeholder="Your email" />
@@ -37,8 +43,16 @@ export default function ContactForm() {
       <FormGroup onInput={(e) => setMessage(e.target.value)} value={message} label="Message" type="text" placeholder="Your message" />
 
       <div className="text-center">
-        <button className="bg-purple-500 text-gray-50 px-6 py-2 rounded">Send Message</button>
+        <button className="bg-green-500 hover:bg-opacity-80 transition-all text-gray-50 px-6 py-2 rounded">Send Message</button>
       </div>
+
+      { submitted ? (
+        <span>Thank you for your submission {fullname}</span>
+      ) : ''}
+
+      { errors !== null ? (
+        <span className='text-red-600'>{errors}</span>
+      ) : ''}
     </form>
   )
 }
